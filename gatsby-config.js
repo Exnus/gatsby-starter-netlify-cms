@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Gatsby + Netlify CMS Starter',
+    author: 'Kim Ken',
     description:
       'This repo contains an example business website that is built with Gatsby, and Netlify CMS.It follows the JAMstack architecture by using Git as a single source of truth, and Netlify for continuous deployment, and CDN distribution.',
   },
@@ -18,15 +19,47 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        path: `${__dirname}/src/pages`,
-        name: 'pages',
+        path: `${__dirname}/src/img`,
+        name: 'images',
       },
+    },
+    {
+      resolve: `gatsby-plugin-node-fields`,
+      options: {
+        descriptors: [
+          {
+            predicate: node =>
+                node.internal.type === `MarkdownRemark`,
+            fields: [
+              {
+                name: 'explanation',
+                getter: node => node.explanation,
+                defaultValue: 'No explanation provided'
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/content/blog`,
+        name: `questions`
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/content/questions`,
+        name: `questions`
+      }
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        path: `${__dirname}/src/img`,
-        name: 'images',
+        path: `${__dirname}/src/pages`,
+        name: 'pages',
       },
     },
     'gatsby-plugin-sharp',
